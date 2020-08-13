@@ -3,31 +3,33 @@ from google.cloud import bigquery
 
 
 app = Flask(__name__)
-# bigquery_client = bigquery.Client()
+bigquery_client = bigquery.Client()
 
 
 @app.route("/")
 def main():
-
+    # リクエストパラメータからIDとMESSAGEを取得
     id = request.args.get('id')
     message = request.args.get('message')
 
+    query = f'INSERT INTO DATASET1.TABLE1 (ID, MESSAGE) VALUES ({id}, \"{message}\" )'
+
+    bigquery_client.query(query).result()
+
     return redirect(
         url_for(
-            "get_lists",
-            id=id,
-            message=message
+            "get_lists"
         )
     )
 
-
 @app.route("/list")
 def get_lists():
-    id = request.args.get("id")
-    message = request.args.get("message")
 
+    query = 'SELECT * FROM DATASET1.TABLE1'
 
-    return render_template("list.html", id=id, message=message)
+    results = bigquery_client.query(query).result()
+
+    return render_template("list.html", results=results)
 
 
 if __name__ == "__main__":
