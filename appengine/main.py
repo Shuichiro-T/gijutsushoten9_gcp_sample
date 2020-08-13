@@ -13,8 +13,8 @@ def main():
     message = request.args.get('message')
 
     # データ作成用SQLの構築
-    query = 'INSERT INTO DATASET1.TABLE1 (ID, MESSAGE)' 
-        + f'VALUES ({id}, \"{message}\" )'
+    query = 'INSERT INTO DATASET1.TABLE1 (ID, MESSAGE)' \
+     + f'VALUES ({id}, \"{message}\" )'
 
     # SQLの実行
     bigquery_client.query(query).result()
