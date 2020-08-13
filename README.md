@@ -1,0 +1,1 @@
+# gijutsushoten9_gcp_sample
